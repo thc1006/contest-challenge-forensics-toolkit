@@ -30,12 +30,13 @@ check_command() {
             echo -e "${RED}✗${NC} $cmd: NOT FOUND (REQUIRED)"
             echo "   Install: $install_hint"
             ((ERRORS++))
+            return 1
         else
             echo -e "${YELLOW}⚠${NC} $cmd: NOT FOUND (optional)"
             echo "   Install: $install_hint"
             ((WARNINGS++))
+            return 0  # Return 0 for optional tools to not trigger set -e
         fi
-        return 1
     fi
 }
 
