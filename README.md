@@ -1,11 +1,18 @@
 
 # Contest Challenge Forensics Toolkit
 
+> **Automated evidence collection & timeline generation for verifying contest submissions**
+
 **Build evidence-based timelines to verify contest submissions using public, reproducible data sources.**
 
 This toolkit collects and analyzes data from multiple authoritative sources (GH Archive, GitHub API, CT logs, urlscan, Wayback Machine, DNS history) to create a comprehensive timeline comparing **deadline vs. actual behavior**, helping you challenge contest results with facts.
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![CI](https://github.com/thc1006/contest-challenge-forensics-toolkit/actions/workflows/ci.yml/badge.svg)](https://github.com/thc1006/contest-challenge-forensics-toolkit/actions/workflows/ci.yml)
+[![Docker](https://img.shields.io/badge/docker-ready-blue.svg)](https://hub.docker.com)
+[![Python](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org)
+[![Bash](https://img.shields.io/badge/bash-4.0%2B-green.svg)](https://www.gnu.org/software/bash/)
+[![GitHub Release](https://img.shields.io/github/v/release/thc1006/contest-challenge-forensics-toolkit)](https://github.com/thc1006/contest-challenge-forensics-toolkit/releases)
 
 ---
 
