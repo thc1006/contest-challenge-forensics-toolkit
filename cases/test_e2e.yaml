@@ -1,0 +1,16 @@
+# End-to-End Test Case - Real GitHub Repository
+case_slug: test_e2e_github
+rules_url: https://github.com/torvalds/linux
+deadline_local: 2024-12-31T23:59:59+08:00
+
+targets:
+  # 測試 2024-01-01 的 Linux kernel 活動（只取 1 小時以加快測試）
+  date_window_utc:
+    start: 2024-01-01
+    end:   2024-01-01
+  repos:
+    - owner: torvalds
+      name: linux
+      commits:
+        # 真實存在的 Linux kernel commit
+        - fbafc3e621c3f4ded43720fdb1d6ce1728ec664e
