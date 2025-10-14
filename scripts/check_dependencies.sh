@@ -29,12 +29,12 @@ check_command() {
         if [ "$required" = "required" ]; then
             echo -e "${RED}✗${NC} $cmd: NOT FOUND (REQUIRED)"
             echo "   Install: $install_hint"
-            ((ERRORS++))
+            ((ERRORS++)) || true
             return 1
         else
             echo -e "${YELLOW}⚠${NC} $cmd: NOT FOUND (optional)"
             echo "   Install: $install_hint"
-            ((WARNINGS++))
+            ((WARNINGS++)) || true
             return 0  # Return 0 for optional tools to not trigger set -e
         fi
     fi
@@ -133,7 +133,7 @@ if [ -f ".env" ]; then
 else
     echo -e "${YELLOW}⚠${NC} .env file NOT FOUND (optional for CI)"
     echo "   Run: cp .env.sample .env"
-    ((WARNINGS++))
+    ((WARNINGS++)) || true
 fi
 
 # Summary
