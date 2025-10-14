@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    name: Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python-version: ['3.9', '3.10', '3.11', '3.12']
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install system dependencies (Ubuntu)
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y bash curl jq
+        sudo curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o /usr/local/bin/yq
+        sudo chmod +x /usr/local/bin/yq
+    
+    - name: Install system dependencies (macOS)
+      if: runner.os == 'macOS'
+      run: |
+        brew install bash curl jq yq
+    
+    - name: Install Python dependencies
+      run: |
+        pip install -r requirements.txt
+    
+    - name: Verify installation
+      run: |
+        bash scripts/check_dependencies.sh
+    
+    - name: Test YAML parsing
+      run: |
+        yq eval '.case_slug' cases/sample_case.yaml
+    
+    - name: Test Python scripts
+      run: |
+        python3 -c "import yaml; import sys; print('PyYAML OK')"
+        python3 -c "from datetime import datetime, timezone; print('datetime OK')"
+        python3 tools/compile_timeline.py --help || true
+
+  docker:
+    name: Docker Build
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    
+    - name: Build Docker image
+      run: |
+        docker build -t contest-forensics:test .
+    
+    - name: Test Docker image
+      run: |
+        docker run --rm contest-forensics:test bash scripts/check_dependencies.sh
+    
+    - name: Test case execution (dry run)
+      run: |
+        docker run --rm \
+          -v $(pwd)/cases:/app/cases \
+          -v $(pwd)/.env.sample:/app/.env:ro \
+          contest-forensics:test \
+          bash -c "yq eval '.case_slug' cases/sample_case.yaml"
+
+  lint:
+    name: Lint Scripts
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install shellcheck
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y shellcheck
+    
+    - name: Lint bash scripts
+      run: |
+        find scripts -name "*.sh" -exec shellcheck -e SC1091 {} +
+    
+    - name: Check Python syntax
+      run: |
+        python3 -m py_compile tools/*.py

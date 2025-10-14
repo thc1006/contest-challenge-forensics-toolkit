@@ -38,34 +38,87 @@ This toolkit collects and analyzes data from multiple authoritative sources (GH 
 
 **Quick check:** Run `bash scripts/check_dependencies.sh` to verify all dependencies.
 
+**Auto-install:** Run `bash scripts/install_dependencies.sh` to install missing dependencies automatically.
+
 ---
 
 ## 🚀 Quick Start
 
-### 1. Install Dependencies
+### Option 1: One-Command Setup (Recommended)
+
+```bash
+bash quick-start.sh
+```
+
+This interactive script will:
+- Detect your OS and install dependencies automatically
+- Or set up Docker if available
+- Create necessary directories
+- Verify installation
+
+### Option 2: Docker (Zero Setup)
+
+**Prerequisites:** Docker and Docker Compose installed
+
+```bash
+# Build and run with Docker
+docker-compose build
+docker-compose run --rm run-case
+
+# Or interactive shell
+docker-compose run --rm forensics-toolkit
+bash scripts/run_case.sh cases/sample_case.yaml
+```
+
+**Advantages:**
+- ✅ No dependency installation needed
+- ✅ Consistent environment across all platforms
+- ✅ Isolated from host system
+- ✅ Production-ready
+
+### Option 3: Manual Installation
 
 See [INSTALLATION.md](INSTALLATION.md) for detailed platform-specific instructions.
 
-**Linux/macOS:**
+**Automatic Installation (all platforms):**
 ```bash
-# Ubuntu/Debian
+bash scripts/install_dependencies.sh
+```
+
+**Manual Installation:**
+
+<details>
+<summary>Click to expand manual installation instructions</summary>
+
+**Linux (Ubuntu/Debian):**
+```bash
 sudo apt install bash curl jq python3 python3-pip
 sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq
 sudo chmod +x /usr/bin/yq
-pip3 install PyYAML
+pip3 install -r requirements.txt
+```
 
-# macOS
+**macOS:**
+```bash
 brew install bash curl jq yq python3
-pip3 install PyYAML
+pip3 install -r requirements.txt
 ```
 
 **Windows:**
 1. Install [Git for Windows](https://git-scm.com/download/win) (includes Git Bash)
 2. Install jq and yq (via Chocolatey: `choco install jq yq`)
 3. Install Python 3.9+ from [python.org](https://www.python.org/downloads/)
-4. Run `pip install PyYAML`
+4. Run `pip install -r requirements.txt`
 
-### 2. Setup Configuration
+</details>
+
+### 2. Verify Installation
+
+```bash
+bash scripts/check_dependencies.sh
+```
+
+### 3. Setup Configuration
 
 ```bash
 # Copy sample config
@@ -79,12 +132,6 @@ Minimal `.env` configuration:
 ```bash
 GITHUB_TOKEN=your_token_here    # Get from: https://github.com/settings/tokens
 LOCAL_TZ=Asia/Taipei            # Your timezone
-```
-
-### 3. Verify Installation
-
-```bash
-bash scripts/check_dependencies.sh
 ```
 
 ### 4. Create Your First Case

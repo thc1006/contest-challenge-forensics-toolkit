@@ -1,0 +1,28 @@
+# Docker ignore file
+.git
+.gitignore
+*.md
+!README.md
+
+# Local files
+.env
+outputs/
+data/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

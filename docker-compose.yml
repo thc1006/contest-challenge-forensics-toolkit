@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  forensics-toolkit:
+    build: .
+    container_name: contest-forensics
+    volumes:
+      - ./cases:/app/cases
+      - ./outputs:/app/outputs
+      - ./data:/app/data
+      - ./.env:/app/.env:ro
+    environment:
+      - LOCAL_TZ=${LOCAL_TZ:-Asia/Taipei}
+    working_dir: /app
+    stdin_open: true
+    tty: true
+    command: bash
+
+  # One-shot service to run a specific case
+  run-case:
+    build: .
+    volumes:
+      - ./cases:/app/cases
+      - ./outputs:/app/outputs
+      - ./data:/app/data
+      - ./.env:/app/.env:ro
+    environment:
+      - LOCAL_TZ=${LOCAL_TZ:-Asia/Taipei}
+      - CASE_FILE=${CASE_FILE:-cases/sample_case.yaml}
+    working_dir: /app
+    command: bash scripts/run_case.sh ${CASE_FILE:-cases/sample_case.yaml}
+    profiles:
+      - run

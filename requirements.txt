@@ -1,0 +1,8 @@
+# Python dependencies for Contest Challenge Forensics Toolkit
+
+# Core
+PyYAML>=6.0
+
+# Timezone support (for Python < 3.9)
+tzdata>=2023.3
+backports.zoneinfo>=0.2.1; python_version < "3.9"
