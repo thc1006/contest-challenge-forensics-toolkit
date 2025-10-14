@@ -9,6 +9,7 @@ TARGET_URL="${1:?URL required}"
 CASE_SLUG="${2:?CASE_SLUG}"
 export CASE_SLUG
 
+# shellcheck disable=SC2001
 SAFE_NAME=$(echo "$TARGET_URL" | sed 's#[^A-Za-z0-9._-]#_#g')
 OUT="outputs/${CASE_SLUG}/wayback_${SAFE_NAME}.json"
 mkdir -p "outputs/${CASE_SLUG}" "data/wayback/${CASE_SLUG}"

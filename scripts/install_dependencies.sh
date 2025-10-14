@@ -69,7 +69,7 @@ install_jq() {
                 echo "Please install jq manually:"
                 echo "  1. Download from: https://stedolan.github.io/jq/download/"
                 echo "  2. Rename to jq.exe"
-                echo "  3. Place in: C:\\Program Files\\Git\\usr\\bin\\"
+                printf "  3. Place in: C:\\\\Program Files\\\\Git\\\\usr\\\\bin\\\\\\n"
                 return 1
             fi
             ;;
@@ -104,7 +104,7 @@ install_yq() {
                 echo "Please install yq manually:"
                 echo "  1. Download from: https://github.com/mikefarah/yq/releases"
                 echo "  2. Rename to yq.exe"
-                echo "  3. Place in: C:\\Program Files\\Git\\usr\\bin\\"
+                printf "  3. Place in: C:\\\\Program Files\\\\Git\\\\usr\\\\bin\\\\\\n"
                 return 1
             fi
             ;;
@@ -206,9 +206,7 @@ main() {
     
     # Final check
     echo -e "${BLUE}=== Verification ===${NC}"
-    bash scripts/check_dependencies.sh
-    
-    if [ $? -eq 0 ]; then
+    if bash scripts/check_dependencies.sh; then
         echo ""
         echo -e "${GREEN}=== Installation Complete! ===${NC}"
         echo ""

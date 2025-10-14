@@ -21,7 +21,8 @@ check_command() {
     local install_hint="$3"
     
     if command -v "$cmd" >/dev/null 2>&1; then
-        local version=$($cmd --version 2>&1 | head -n 1 || echo "unknown")
+        local version
+        version=$($cmd --version 2>&1 | head -n 1 || echo "unknown")
         echo -e "${GREEN}✓${NC} $cmd: $version"
         return 0
     else
@@ -96,7 +97,7 @@ echo "--- Optional Tools ---"
 check_command "git" "optional" "https://git-scm.com/downloads"
 check_command "gh" "optional" "https://cli.github.com/"
 
-# Environment file check
+# Environment file check (optional in CI)
 echo ""
 echo "--- Configuration ---"
 if [ -f ".env" ]; then
@@ -129,9 +130,9 @@ if [ -f ".env" ]; then
         echo -e "${YELLOW}⚠${NC} LOCAL_TZ: not set (will default to Asia/Taipei)"
     fi
 else
-    echo -e "${RED}✗${NC} .env file NOT FOUND"
+    echo -e "${YELLOW}⚠${NC} .env file NOT FOUND (optional for CI)"
     echo "   Run: cp .env.sample .env"
-    ((ERRORS++))
+    ((WARNINGS++))
 fi
 
 # Summary

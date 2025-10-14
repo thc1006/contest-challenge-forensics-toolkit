@@ -9,6 +9,7 @@ Q="${1:?domain or query}"
 CASE_SLUG="${2:?CASE_SLUG}"
 export CASE_SLUG
 
+# shellcheck disable=SC2001
 SAFE=$(echo "$Q" | sed 's#[^A-Za-z0-9._-]#_#g')
 OUT="outputs/${CASE_SLUG}/urlscan_search_${SAFE}.json"
 mkdir -p "outputs/${CASE_SLUG}"
