@@ -1,0 +1,16 @@
+# Ensure shell scripts always use LF line endings
+*.sh text eol=lf
+
+# Python files
+*.py text eol=lf
+
+# YAML files
+*.yaml text eol=lf
+*.yml text eol=lf
+
+# Markdown and documentation
+*.md text eol=lf
+
+# Windows-specific files can use CRLF
+*.bat text eol=crlf
+*.ps1 text eol=crlf
