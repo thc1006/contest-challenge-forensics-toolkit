@@ -1,0 +1,1 @@
+透過 crt.sh 取得 CT JSON；（可選）SecurityTrails 查 DNS 歷史。

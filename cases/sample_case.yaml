@@ -1,0 +1,17 @@
+
+case_slug: exoplanetplayground
+rules_url: https://example.org/contest/rules
+deadline_local: 2025-10-06T00:00:00+08:00
+
+targets:
+  date_window_utc:
+    start: 2025-10-05
+    end:   2025-10-07
+  repos:
+    - owner: onion0905
+      name: Exoplanet-Playground
+      commits:
+        - 5af9a12cb0f957a02717ff739f9608039f5acc33
+  websites:
+    - url: https://exoplanetplayground.app/
+      domain: exoplanetplayground.app
