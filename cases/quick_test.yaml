@@ -1,0 +1,14 @@
+case_slug: quick_test
+rules_url: https://example.org/test
+deadline_local: 2024-01-01T00:00:00+08:00
+
+targets:
+  # 只測試一個小時的 GH Archive 資料
+  date_window_utc:
+    start: 2024-01-01
+    end:   2024-01-01
+  repos:
+    - owner: torvalds
+      name: linux
+      commits:
+        - fbafc3e621c3f4ded43720fdb1d6ce1728ec664e  # 已知存在的 Linux kernel commit
